@@ -14,19 +14,26 @@ type Notif = {
 
 const App = () => {
   const [searchText, setSearchText] = useState('')
-  const [isLoading, setLoading] = useState(false)
-  const [results, setResults] = useState<null | Notif[]>(null)
+  const [isLoading, setLoading] = useState<boolean>(false)
+  const [error, setError] = useState<Error | null>(null)
+  const [results, setResults] = useState<Notif[] | null>(null)
 
   useEffect(() => {
     const effect = async () => {
-      // FIXME there is something wrong with this loading state... to be investigated :D
-      setLoading(true)
-      const res = await fetch(`${API}/search?type=${searchText}`)
-      const data = await res.json()
-      setResults(data)
+      try {
+        setLoading(true)
+        setError(null)
+        const res = await fetch(`${API}/search?type=${searchText}`)
+        const data = await res.json()
+        setResults(data)
+        setLoading(false)
+      } catch (error) {
+        setError(error as Error)
+        setLoading(false)
+      }
     }
     effect()
-  }, [searchText, setLoading, setResults])
+  }, [searchText])
 
   return (
     <Container>
@@ -35,7 +42,9 @@ const App = () => {
         onChange={setSearchText}
         placeholder="Type to filter events"
       />
-      {isLoading ? (
+      {error ? (
+        <div>{'Something went wrong. Please try again'}</div>
+      ) : isLoading ? (
         <div>{'Loading...'}</div>
       ) : results ? (
         <div>
