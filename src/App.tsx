@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 import Input from './Input'
 
-const API = 'http://localhost:5000'
+const API = 'http://localhost:5001'
 
 type Notif = {
   id: string
@@ -21,7 +21,7 @@ const App = () => {
     const effect = async () => {
       // FIXME there is something wrong with this loading state... to be investigated :D
       setLoading(true)
-      const res = await fetch(`${API}/search?q=${searchText}`)
+      const res = await fetch(`${API}/search?type=${searchText}`)
       const data = await res.json()
       setResults(data)
     }
@@ -33,18 +33,18 @@ const App = () => {
       <Input
         value={searchText}
         onChange={setSearchText}
-      placeholder="Type to filter events"
-    />
+        placeholder="Type to filter events"
+      />
       {isLoading ? (
         <div>{'Loading...'}</div>
       ) : results ? (
-      <div>
+        <div>
           {results.map((r) => (
-          // TODO we must finalize this integration!! not very pretty like this
-          <Item>{JSON.stringify(r)}</Item>
+            // TODO we must finalize this integration!! not very pretty like this
+            <Item>{JSON.stringify(r)}</Item>
           ))}
-      </div>
-    ) : null}
+        </div>
+      ) : null}
     </Container>
   )
 }
