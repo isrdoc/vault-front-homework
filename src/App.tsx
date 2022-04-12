@@ -9,16 +9,21 @@ const API = 'http://localhost:5001'
 type Notification = {
   id: string
   type: string
-  // FIXME we should *probably* not have this `any`
-  data: any
+  data: {
+    id: number
+    amount: number
+    unit: string
+    from: string
+    to: string
+  }
 }
 
-const App = () => {
+export default function App() {
   const [searchText, setSearchText] = useState('')
   const searchUrl = `${API}/search?type=${searchText}`
-  const { isLoading, error, results } = useFetch<Notification[]>({
-    url: searchUrl,
-  })
+  const { isLoading, error, results: notifications } = useFetch<Notification[]>(
+    { url: searchUrl },
+  )
 
   return (
     <Container>
@@ -31,11 +36,11 @@ const App = () => {
         <div>{'Something went wrong. Please try again'}</div>
       ) : isLoading ? (
         <div>{'Loading...'}</div>
-      ) : results ? (
+      ) : notifications ? (
         <div>
-          {results.map((r) => (
+          {notifications.map((notification) => (
             // TODO we must finalize this integration!! not very pretty like this
-            <Item>{JSON.stringify(r)}</Item>
+            <Item>{JSON.stringify(notification)}</Item>
           ))}
         </div>
       ) : null}
@@ -52,5 +57,3 @@ const Container = styled.div`
 const Item = styled.div`
   border: 2px dashed red;
 `
-
-export default App
