@@ -9,9 +9,10 @@ The main goal of the homework is to build a simple interface to search accross a
 ![1618934372](https://user-images.githubusercontent.com/944835/115428225-79153780-a202-11eb-9baa-c86e02f97401.png)
 
 You will be provided with a backend with a search endpoint that handles the server part.
-⚠️ There is a bug in the search code that you will have to fix 😏 
+⚠️ There is a bug in the search code that you will have to fix 😏
 
 The current frontend is very minimal and you will be in charge to:
+
 - style the layout to match the above mockups (mockups are just here to give general idea, don't hesitate to choose any color scheme you like)
 - create any components you would need and feel free to restructure the files architecture
 - ⚠️ we intentionnally put some bugs/problems in the code, happy debugging 🥳
@@ -48,5 +49,3 @@ yarn
 # run the dev server
 yarn dev
 ```
-
-

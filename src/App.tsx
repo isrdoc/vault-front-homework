@@ -26,6 +26,7 @@ export default function App(): React.ReactElement {
   return (
     <Container>
       <Input value={searchText} onChange={setSearchText} placeholder="Type to filter events" />
+      <span className="text-3xl font-bold">Test</span>
       {error ? (
         <div>{'Something went wrong. Please try again'}</div>
       ) : isLoading ? (

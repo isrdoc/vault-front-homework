@@ -4,9 +4,12 @@ import { render } from 'react-dom'
 import App from './App'
 import GlobalStyle from './GlobalStyle'
 
-const rootNode = document.getElementById('root')
+import './style.pcss'
 
-render(<>
-       <GlobalStyle />
-       <App />
-</>, rootNode)
+render(
+  <>
+    <GlobalStyle />
+    <App />
+  </>,
+  document.getElementById('root')
+)
