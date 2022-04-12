@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 
 import Input from './Input'
+import useFetch from './useFetch'
 
 const API = 'http://localhost:5001'
 
-type Notif = {
+type Notification = {
   id: string
   type: string
   // FIXME we should *probably* not have this `any`
@@ -14,26 +15,10 @@ type Notif = {
 
 const App = () => {
   const [searchText, setSearchText] = useState('')
-  const [isLoading, setLoading] = useState<boolean>(false)
-  const [error, setError] = useState<Error | null>(null)
-  const [results, setResults] = useState<Notif[] | null>(null)
-
-  useEffect(() => {
-    const effect = async () => {
-      try {
-        setLoading(true)
-        setError(null)
-        const res = await fetch(`${API}/search?type=${searchText}`)
-        const data = await res.json()
-        setResults(data)
-        setLoading(false)
-      } catch (error) {
-        setError(error as Error)
-        setLoading(false)
-      }
-    }
-    effect()
-  }, [searchText])
+  const searchUrl = `${API}/search?type=${searchText}`
+  const { isLoading, error, results } = useFetch<Notification[]>({
+    url: searchUrl,
+  })
 
   return (
     <Container>
