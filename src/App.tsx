@@ -18,20 +18,14 @@ type Notification = {
   }
 }
 
-export default function App() {
+export default function App(): React.ReactElement {
   const [searchText, setSearchText] = useState('')
   const searchUrl = `${API}/search?type=${searchText}`
-  const { isLoading, error, results: notifications } = useFetch<Notification[]>(
-    { url: searchUrl },
-  )
+  const { isLoading, error, results: notifications } = useFetch<Notification[]>({ url: searchUrl })
 
   return (
     <Container>
-      <Input
-        value={searchText}
-        onChange={setSearchText}
-        placeholder="Type to filter events"
-      />
+      <Input value={searchText} onChange={setSearchText} placeholder="Type to filter events" />
       {error ? (
         <div>{'Something went wrong. Please try again'}</div>
       ) : isLoading ? (
@@ -40,7 +34,7 @@ export default function App() {
         <div>
           {notifications.map((notification) => (
             // TODO we must finalize this integration!! not very pretty like this
-            <Item>{JSON.stringify(notification)}</Item>
+            <Item key={notification.id}>{JSON.stringify(notification)}</Item>
           ))}
         </div>
       ) : null}
