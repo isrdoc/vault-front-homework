@@ -6,16 +6,24 @@ import useFetch from './useFetch'
 
 const API = 'http://localhost:5001'
 
+type Transaction = {
+  id: number
+  amount: number
+  unit: string
+  from: string
+  to: string
+}
+
+type Account = {
+  id: number
+  name: string
+  currency: string
+}
+
 type Notification = {
   id: string
   type: string
-  data: {
-    id: number
-    amount: number
-    unit: string
-    from: string
-    to: string
-  }
+  data: Transaction | Account
 }
 
 export default function App(): React.ReactElement {
