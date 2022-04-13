@@ -24,8 +24,8 @@ export default function useFetch<T>({ url }: UseFetch): Return<T> {
         const data = await response.json()
         setResults(data)
         setLoading(false)
-      } catch (error) {
-        setError(error as Error)
+      } catch (err) {
+        setError(err as Error)
         setLoading(false)
       }
     }
